@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle Theme Number Guessing Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #7e57c2;
+            font-family: 'Fjalla One', sans-serif;
+            background-image: url('back.jpg');
+            background-size: 100% 100%;
+            background-repeat: repeat;
+            background-position: center;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #game-container {
+            width: 350px;
+            padding: 30px;
+            border: 4px solid #d1c4e9;
+            border-radius: 15px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #game-container h1 {
+            color: #6a1b9a;
+            margin-bottom: 20px;
+        }
+
+        #game-message {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #7e57c2;
+        }
+
+        #guess-input {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: 2px solid #ba68c8;
+            font-size: 1em;
+            text-align: center;
+        }
+
+        #submit-guess {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #6a1b9a;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        #submit-guess:hover {
+            background-color: #ba68c8;
+            transform: scale(1.05);
+        }
+
+        /* Animations for feedback messages */
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .message {
+            animation: fade-in 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1>Guess the Number!</h1>
+        <p id="game-message">🔍 Guess the number between 1 and 100</p>
+        <input type="number" id="guess-input" min="1" max="100" placeholder="Enter your guess">
+        <button id="submit-guess">Submit</button>
+    </div>
+
+    <script>
+        // Select elements
+        const gameMessage = document.getElementById('game-message');
+        const guessInput = document.getElementById('guess-input');
+        const submitGuessButton = document.getElementById('submit-guess');
+
+        // Set the game number
+        let gameNumber = Math.floor(Math.random() * 100) + 1;
+
+        // Add event listener to the button
+        submitGuessButton.addEventListener('click', function() {
+            let userGuess = parseInt(guessInput.value, 10);
+
+            if (isNaN(userGuess)) {
+                gameMessage.textContent = "❌ Please enter a valid number!";
+                gameMessage.classList.add('message');
+            } else if (userGuess < gameNumber) {
+                gameMessage.textContent = "⬆️ Too low! Try again.";
+                gameMessage.classList.add('message');
+            } else if (userGuess > gameNumber) {
+                gameMessage.textContent = "⬇️ Too high! Try again.";
+                gameMessage.classList.add('message');
+            } else {
+                gameMessage.textContent = "🎉 Correct! You guessed the number!";
+                gameMessage.classList.add('message');
+            }
+
+            // Clear the input field
+            guessInput.value = '';
+        });
+    </script>
+</body>
+</html>
